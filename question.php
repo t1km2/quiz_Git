@@ -1,7 +1,11 @@
 <?php
 require_once('common.php');
 
-$i=rand(0,count($question)-1);
+$data=getDB('select max(id) as maxid from Question');
+
+$i=rand(1,$data['maxid']);
+
+$data = getDB('select question from Question where id=?',[$i]);
 
 ?>
 <!DOCTYPE html>
@@ -12,7 +16,7 @@ $i=rand(0,count($question)-1);
     </head>
     <body>
         <h1>Question</h1>
-        <?=$question[$i][0] ?>
+        <?=$data['question']?>
 
         <form action="result.php">
             <input type="hidden" name="qid" value="<?= $i ?>">
